@@ -1,0 +1,16 @@
+{
+  "name": "module1",
+  "version": "0.0.1",
+  "description": "Just a test",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ulisses Caon",
+  "license": "ISC",
+  "repository": {},
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "yargs": "^4.7.1"
+  }
+}
