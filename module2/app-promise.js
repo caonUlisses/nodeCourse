@@ -4,10 +4,10 @@ const axios = require('axios');
 const argv = yargs
     .options({
         a: {
-            demand: true,
-            alias: 'address',
+            demand  : true,
+            alias   : 'address',
             describe: 'Address to fetch weather for',
-            string: true
+            string  : true
         }
     })
     .help()
@@ -15,7 +15,7 @@ const argv = yargs
     .argv;
 
 let encodedAddress = encodeURIComponent(argv.address);
-let geocodeUrl = `http://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}`;
+let geocodeUrl     = `http://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}`;
 
 axios.get(geocodeUrl).then((response) => {
     if (response.data.status === 'ZERO_RESULTS') {
