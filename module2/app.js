@@ -1,4 +1,4 @@
-const yargs   = require('yargs');
+const yargs = require('yargs');
 
 const geocode = require('./geocode/geocode');
 const weather = require('./weather/weather');
@@ -7,10 +7,10 @@ const weather = require('./weather/weather');
 const argv = yargs
     .options({
         a: {
-            demand: true,
-            alias: 'address',
+            demand  : true,
+            alias   : 'address',
             describe: 'Address to fetch weather for',
-            string: true
+            string  : true
         }
     })
     .help()
@@ -31,4 +31,3 @@ geocode.geocodeAddress(argv.address, (errorMessage, results) => {
         });
     }
 });
-
