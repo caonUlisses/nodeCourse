@@ -1,13 +1,4 @@
-class human {
-    
-    constructor() {
-        console.log('oi');
-    }
-
-    falar(coisa) {
-        console.log(coisa);
-    }
+(arg1) => {
+    console.log(arg1);
 
 }
-
-module.exports = human;

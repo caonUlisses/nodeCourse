@@ -1,7 +1,5 @@
 const yargs = require('yargs');
-
 const notes = require('./notes');
-console.log
 
 const noteTitle = {
       describe: 'Title of note',
