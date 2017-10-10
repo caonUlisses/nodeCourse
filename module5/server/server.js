@@ -11,7 +11,7 @@ let Todo = mongoose.model('Todo', {
     trim     : true
   },
   completed: {
-    type: Boolean,
+    type   : Boolean,
     default: false
   },
   completedAt: {
@@ -20,14 +20,33 @@ let Todo = mongoose.model('Todo', {
   }
 });
 
-let otherTodo = new Todo({
-  text       : 'Feed the cat',
-  completed  : true,
-  completedAt: 123
+// let otherTodo = new Todo({
+//   text       : 'Feed the cat',
+//   completed  : true,
+//   completedAt: 123
+// });
+
+// otherTodo.save().then((doc) => {
+//   console.log(JSON.stringify(doc, undefined, 2));
+// }), (e) => {
+//   console.log('Unable to save todo', e);
+// };
+
+let User = mongoose.model('User', {
+  email: {
+    type     : String,
+    required : true,
+    trim     : true,
+    minlength: 1
+  }
 });
 
-otherTodo.save().then((doc) => {
+let newUser = new User({
+  email: 'test@test.com'
+});
+
+newUser.save().then((doc) => {
   console.log(JSON.stringify(doc, undefined, 2));
 }), (e) => {
-  console.log('Unable to save todo', e);
+  console.log('Unable to save user', e);
 };
