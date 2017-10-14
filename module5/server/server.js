@@ -2,10 +2,11 @@ const express    = require('express');
 const bodyParser = require('body-parser');
 const _          = require('lodash');
 
-const {ObjectId}   = require('mongodb');
-const { mongoose } = require('./db/mongoose');
-const { Todo }     = require('./models/todo');
-const { User }     = require('./models/user');
+const {ObjectId}       = require('mongodb');
+const { mongoose }     = require('./db/mongoose');
+const { Todo }         = require('./models/todo');
+const { User }         = require('./models/user');
+const { authenticate } = require('./middleware/authenticate');
 
 let app = express();
 app.use(bodyParser.json());
@@ -92,10 +93,6 @@ app.patch('/todos/:id', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('We are live on 3000');
-});
-
 app.post('/users', (req, res) => {
   let body = _.pick(req.body, ['email', 'password']);
   let user = new User(body);
@@ -109,5 +106,12 @@ app.post('/users', (req, res) => {
   });
 });
 
+app.get('/users/me', authenticate ,(req, res) => {
+  res.send(req.user);
+});
+
+app.listen(3000, () => {
+  console.log('We are live on 3000');
+});
 
 module.exports = { app };
