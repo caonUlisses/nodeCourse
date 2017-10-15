@@ -1,11 +1,11 @@
+const _          = require('lodash');
 const express    = require('express');
 const bodyParser = require('body-parser');
-const _          = require('lodash');
 
-const {ObjectId}       = require('mongodb');
-const { mongoose }     = require('./db/mongoose');
 const { Todo }         = require('./models/todo');
 const { User }         = require('./models/user');
+const {ObjectId}       = require('mongodb');
+const { mongoose }     = require('./db/mongoose');
 const { authenticate } = require('./middleware/authenticate');
 
 let app = express();
