@@ -21,17 +21,21 @@ const todos = [{
 }];
 
 const users = [{
-    _id: userOneId,
-    email: 'tester@tester.tester',
+    _id     : userOneId,
+    email   : 'tester@tester.tester',
     password: 'userPassword',
-    tokens: [{
+    tokens  : [{
       access: 'auth',
-      token: jwt.sign({_id: userOneId, access: 'auth'}, 'abc123').toString()  
+      token : jwt.sign({_id: userOneId, access: 'auth'}, 'abc123').toString()
     }]
 }, {
-    _id: userTwoId,
-    email: 'test@tester.tester',
+    _id     : userTwoId,
+    email   : 'test@tester.tester',
     password: 'secondUserPassword',
+    tokens  : [{
+        access: 'auth',
+        token : jwt.sign({_id: userTwoId, access: 'auth'}, 'abc123').toString()
+      }]
 }];
 
 
