@@ -1,10 +1,10 @@
-const request   = require('supertest');
-const expect    = require('expect');
+const request = require('supertest');
+const expect  = require('expect');
 
-const { ObjectId }      = require('mongodb');
-const { app }           = require('./../server/server');
-const { Todo }          = require('./../server/models/todo');
-const { User }          = require('./../server/models/user');
+const { ObjectId } = require('mongodb');
+const { app }      = require('./../server/server');
+const { Todo }     = require('./../server/models/todo');
+const { User }     = require('./../server/models/user');
 const { todos,
         populateTodos,
         users,
@@ -206,7 +206,7 @@ describe('GET /users/me', () => {
 describe('POST /users', () => {
     it('should create a user ', (done) => {
         let email    = 'example@example.com';
-        let password = '123bnm'; 
+        let password = '123bnm';
         request(app)
             .post('/users')
             .send({email, password})
@@ -225,14 +225,14 @@ describe('POST /users', () => {
                     expect(user).toExist();
                     expect(user.password).toNotBe(password);
                     done();
-                });
+                }).catch((e) => done(e));
             });
 
     });
 
     it('should return validation errors if request invalid', (done) => {
         let email    = '123@123';
-        let password = '123456'; 
+        let password = '123456';
         request(app)
             .post('/users')
             .send({email, password})
@@ -249,6 +249,56 @@ describe('POST /users', () => {
             .send({email, password})
             .expect(400)
             .end(done);
-
     });
 })
+
+describe('POST /users/login', ()=> {
+    it('should login user and return auth token', (done) => {
+        request(app)
+            .post('/users/login')
+            .send({
+                email   : users[1].email,
+                password: users[1].password
+            })
+            .expect(200)
+            .expect((res) => {
+                expect(res.headers['x-auth']).toExist();
+            })
+            .end((err, res) => {
+                if(err) {
+                    return done(err);
+                }
+
+                User.findById(users[1]._id).then((user) => {
+                    expect(user.tokens[0]).toInclude({
+                        access: 'auth',
+                        token : res.header['x-auth']
+                    });
+                    done();
+                }).catch((e) => done(e));
+            });
+    });
+
+    it('should reject invalid login', (done) => {
+        request(app)
+            .post('/users/login')
+            .send({
+                email   : users[1].email,
+                password: 'asdf'
+            })
+            .expect(400)
+            .expect((res) => {
+                expect(res.headers['x-auth']).toNotExist();
+            })
+            .end((err, res) => {
+                if (err) {
+                    done(err);
+                }
+                
+                User.findById(users[1]._id).then((user) => {
+                    expect(user.tokens.length).toBe(0);
+                    done();
+                }).catch((e) => done(e));
+            });
+    });
+});
