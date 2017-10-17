@@ -15,11 +15,20 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('new user connected');
 
+    socket.on('createMessage', (message) => {
+        console.log('createdMessage', message);
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
+    });
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
-    })
+    });
 });
 
-server.listen(8080, () => {
-    console.log('We are live on port 8080');
+server.listen(3000, () => {
+    console.log('We are live on port 3000');
 });
